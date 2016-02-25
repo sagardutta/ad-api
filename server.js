@@ -7,7 +7,20 @@ var bodyParser = require('body-parser');
 
 
 
-mongoose.connect(process.env.MONGOLAB_URI); 
+mongoose.connect(process.env.MONGOLAB_URI);
+
+var User = mongoose.model('User',{name:String,tags:Array, image:String});
+
+var user = new User({name:'sipoy',tags:['kev', 'keka']});
+
+user.save(function(err, userObj){
+    if(err){
+      console.log(err);
+    }else{
+      console.log(userObj);
+    }
+
+});
 
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
