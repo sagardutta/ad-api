@@ -40,7 +40,7 @@ router.post('/', function(req,res){
       console.log(err);
       res.json({error:err});
     }
-    res.json()
+    res.json(user);
   });
 
 
