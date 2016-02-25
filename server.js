@@ -30,7 +30,8 @@ var router = express.Router();              // get an instance of the express Ro
 
 router.get('/', function(req, res){
    console.log('Service GET request');
-   User.find(function(err, users){
+   var tag = req.query.tag;
+   User.find({tags:tag},function(err, users){
      if(err){
        console.log(err)
        res.json({error:err});
@@ -44,7 +45,7 @@ router.post('/', function(req,res){
 
   console.log('Posting to the API');
 
-  User.create({name:req.body.name,tags:req.body.tags}, function (err, user){
+  User.create({name:req.body.name,tags:req.body.tags, image:req.body.image}, function (err, user){
     if(err){
       console.log(err);
       res.json({error:err});
