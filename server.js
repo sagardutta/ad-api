@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 
 
-mongoose.connect(process.ENV.MONGOLAB_URI); 
+mongoose.connect(process.env.MONGOLAB_URI); 
 
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
