@@ -17,6 +17,8 @@ var User = mongoose.model('User',schema);
 
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
+app.use(express.static('public'));
+
 
 var port = process.env.PORT || 3000;        // set our port
 
@@ -28,7 +30,14 @@ var router = express.Router();              // get an instance of the express Ro
 
 router.get('/', function(req, res){
    console.log('Service GET request');
-   res.json({name:'hello world!!!'});
+   User.find(function(err, users){
+     if(err){
+       console.log(err)
+       res.json({error:err});
+     }
+     res.json(users);
+   });
+
 });
 
 router.post('/', function(req,res){
