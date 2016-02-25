@@ -3,6 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>submit demo</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
   <style>
   p {
     margin: 0;
@@ -15,20 +23,31 @@
     color: red;
   }
   </style>
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
 </head>
 <body>
+<div class="container" >
 
+  <h2 > Upload the advertisement </h2>
+
+  <form role="form" id="myForm" action="">
+    <div class="form-group">
+      <label for="title"> Title:: </label> <input class="form-control" id="post" type="text" >
+        <label for="tags"> Tags:: </label> <input class="form-control" id="tags" type="text" >
+
+        <span class="btn btn-default btn-file">
+            Browse <input type="file" onchange="readFile()">
+        </span>
+
+      <input type="submit" class="btn btn-default">
+    </div>
+  </form>
+
+
+
+</div>
 <p>Type 'correct' to validate.</p>
-<form id="myForm" action="">
-  <div>
-    <input id="post" type="text" >
-    <input id="tags" type="text" >
-    <input type="file" onchange="readFile()">
-    <input type="submit">
-  </div>
-</form>
-<span></span>
+
 
 <script>
 var uploadedFile ;
