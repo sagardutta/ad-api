@@ -13,16 +13,13 @@ var schema = new mongoose.Schema({name:String,tags:Array, image:String});
 
 var User = mongoose.model('User',schema);
 
-// var user = new User({name:'sipoy',tags:['kev', 'keka']});
-//
-// user.save(function(err, userObj){
-//     if(err){
-//       console.log(err);
-//     }else{
-//       console.log(userObj);
-//     }
-//
-// });
+var user = new User({name:'sipoy',tags:['kev', 'keka']});
+
+user.save(function(err){
+    if(err){
+      console.log(err);
+    }
+});
 
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
