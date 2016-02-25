@@ -4,45 +4,56 @@
   <meta charset="utf-8">
   <title>search</title>
   <style>
-  p {
-    margin: 0;
-    color: blue;
+  body {
+    padding-top: 60px;
   }
-  div,p {
-    margin-left: 10px;
-  }
-  span {
-    color: red;
+  @media (max-width: 980px) {
+    body {
+      padding-top: 0;
+    }
   }
   </style>
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<p>Type 'correct' to validate.</p>
-
-<input id="term" type="text" >
-<input type="button" value="search" onclick=search() >
-<img id="test" src=""/>
-
-<span></span>
+<div class="container" >
+  <div class="col-lg-6 center-block">
+     <div class="input-group ">
+       <input id="term" type="text" class="form-control" placeholder="Search for tags..">
+       <span class="input-group-btn">
+         <button class="btn btn-primary" type="button" onclick=search() >Go!</button>
+       </span>
+     </div>
+   </div>
+<div class="col-lg-6">
+<img id="test" class="center-block" src=""/>
+</div>
+</div>
 
 <script>
 
 function search(){
   var term = $('#term').val();
   var imageHolder = document.querySelector('img');
+  imageHolder.src = "";
   var results = $.get("/api?tag="+term);
   results.done(function(data){
-      console.log(data);
-      $.each(data, function(){
-        if(this.image){
-            console.log(this.image);
-            imageHolder.src = this.image;
-        }
+    if(!data){
+        imageHolder.src = "abc";
+        imageHolder.alt="No Results found";
+    }else{
+        console.log(data);
+        $.each(data, function(){
+          if(this.image){
+              console.log(this.image);
+              imageHolder.src = this.image;
+          }
 
-      });
-
+        });
+    }
     });
 
 }
