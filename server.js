@@ -13,13 +13,7 @@ var schema = new mongoose.Schema({name:String,tags:Array, image:String});
 
 var User = mongoose.model('User',schema);
 
-var user = new User({name:'sipoy',tags:['kev', 'keka']});
 
-user.save(function(err){
-    if(err){
-      console.log(err);
-    }
-});
 
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
@@ -35,6 +29,21 @@ var router = express.Router();              // get an instance of the express Ro
 router.get('/', function(req, res){
    console.log('Service GET request');
    res.json({name:'hello world!!!'});
+});
+
+router.post('/', function(req,res){
+
+  console.log('Posting to the API');
+
+  User.create({name:req.body.name,tags:req.body.tags}, function (err, user){
+    if(err){
+      console.log(err);
+      res.json({error:err});
+    }
+    res.json()
+  });
+
+
 });
 
 app.use('/api', router);
