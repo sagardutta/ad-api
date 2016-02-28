@@ -19,6 +19,12 @@ app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 app.use(express.static('public'));
 
+app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
+
 
 var port = process.env.PORT || 3000;        // set our port
 
