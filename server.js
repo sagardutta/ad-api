@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 
+//mongodb://192.168.99.100:27017/test'
 
 mongoose.connect(process.env.MONGOLAB_URI);
 
@@ -19,9 +20,8 @@ app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 app.use(express.static('public'));
 
-app.all('/', function(req, res, next) {
+app.all('/api', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
  });
 
