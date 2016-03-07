@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
+var admissionRoutes = require('./routes.js');
+var extractRequest = require('./middleware.js');
 
 
 var bodyParser = require('body-parser');
@@ -8,17 +10,18 @@ var bodyParser = require('body-parser');
 
 //mongodb://192.168.99.100:27017/test'
 
-mongoose.connect(process.env.MONGOLAB_URI);
+//mongoose.connect(process.env.MONGOLAB_URI);
 
 var schema = new mongoose.Schema({name:String,tags:Array, image:String});
 
 var User = mongoose.model('User',schema);
 
 
-
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 app.use(express.static('public'));
+
+app.use(extractRequest);
 
 app.all('/api', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -28,40 +31,8 @@ app.all('/api', function(req, res, next) {
 
 var port = process.env.PORT || 3000;        // set our port
 
-// ROUTES FOR OUR API
-// =============================================================================
-var router = express.Router();              // get an instance of the express Router
 
 
-
-router.get('/', function(req, res){
-   console.log('Service GET request');
-   var tag = req.query.tag;
-   User.find({tags:tag},function(err, users){
-     if(err){
-       console.log(err)
-       res.json({error:err});
-     }
-     res.json(users);
-   });
-
-});
-
-router.post('/', function(req,res){
-
-  console.log('Posting to the API');
-
-  User.create({name:req.body.name,tags:req.body.tags, image:req.body.image}, function (err, user){
-    if(err){
-      console.log(err);
-      res.json({error:err});
-    }
-    res.json(user);
-  });
-
-
-});
-
-app.use('/api', router);
+app.use('/api', admissionRoutes);
 app.listen(port);
 console.log("app started on:"+ port);
