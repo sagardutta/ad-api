@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var extend = require('mongoose-schema-extend');
+var mongoosePaginate = require('mongoose-paginate');
 
 mongoose.connect(process.env.MONGOLAB_URI);
 var AdSchema = new mongoose.Schema({
@@ -18,6 +19,8 @@ var AdSchema = new mongoose.Schema({
   tags:[String]
 
 });
+
+AdSchema.plugin(mongoosePaginate);
 
 var JobSchema = AdSchema.extend({
   jobMelaDetails:String,
