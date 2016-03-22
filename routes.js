@@ -20,6 +20,26 @@ router.get('/:id', function(req, res){
 
 })
 
+
+router.put('/:id', function(req, res){
+  const id = req.params.id;
+  console.log('update issued on '+id);
+  const updatedAdmission = req.body;
+
+  models.Admission.findByIdAndUpdate(id,updatedAdmission,function(err, admission){
+    if(err){
+      console.log(err)
+      res.json({error:err});
+    }else{
+      console.log(updatedAdmission);
+      res.json(updatedAdmission);
+    }
+  });
+
+})
+
+
+
 router.get('/', function(req, res){
    console.log('Service GET request');
    var tag = req.query.tag;
