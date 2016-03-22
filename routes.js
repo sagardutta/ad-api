@@ -4,12 +4,32 @@ var models = require('./models.js');
 var router = express.Router();              // get an instance of the express Router
 
 
+router.get('/:id', function(req, res){
+  const id = req.params.id;
+  console.log(id);
+
+  models.Admission.findById(id,function(err, admission){
+    if(err){
+      console.log(err)
+      res.json({error:err});
+    }else{
+      console.log(admission);
+      res.json(admission);
+    }
+  });
+
+})
 
 router.get('/', function(req, res){
    console.log('Service GET request');
    var tag = req.query.tag;
    var page = parseInt(req.query.page);
    var limit = parseInt(req.query.limit);
+   var createdDate = req.query.date;
+
+
+
+
 
    if(page == undefined){
      page = 1;
@@ -17,7 +37,18 @@ router.get('/', function(req, res){
    if(limit == undefined){
      limit = 10;
    }
-   models.Admission.paginate({tags:tag},{page: page, limit :limit},function(err, users){
+
+   var queryObject = {};
+   if(tag){
+     queryObject.tags = tag;
+   }
+   if(createdDate){
+     queryObject.createdDate = createdDate;
+   }
+
+   console.log(queryObject);
+
+   models.Admission.paginate(queryObject,{page: page, limit :limit},function(err, users){
      if(err){
        console.log(err)
        res.json({error:err});
