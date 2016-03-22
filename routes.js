@@ -20,6 +20,22 @@ router.get('/:id', function(req, res){
 
 })
 
+router.delete('/:id', function(req, res){
+  const id = req.params.id;
+  console.log(id);
+
+  models.Admission.findByIdAndRemove(id,function(err){
+    if(err){
+      console.log(err)
+      res.json({error:err});
+    }else{
+      console.log();
+      res.json();
+    }
+  });
+
+})
+
 
 router.put('/:id', function(req, res){
   const id = req.params.id;
