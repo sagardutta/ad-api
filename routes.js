@@ -42,7 +42,7 @@ router.put('/:id', function(req, res){
   console.log('update issued on '+id);
   const updatedAdmission = req.body;
 
-  models.Admission.findByIdAndUpdate(id,updatedAdmission,function(err, admission){
+  models.Admission.findByIdAndUpdate(id,updatedAdmission,{new:true},function(err, admission){
     if(err){
       console.log(err)
       res.json({error:err});

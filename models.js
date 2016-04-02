@@ -5,16 +5,21 @@ var mongoosePaginate = require('mongoose-paginate');
 mongoose.connect(process.env.MONGOLAB_URI);
 var AdSchema = new mongoose.Schema({
   category: String,
+  notificationName: String,
   qualificiation: String,
-  minAge: Number,
-  maxAge:Number,
+
+  age:Number,
   source: String,
-  applicationProcess: String,
+  applicationProcedure: String,
   selectionProcess: String,
   notificationDate: Date,
   lastDate: Date,
+
+
+
   createdDate: Date,
   lastUpdatedDate: Date,
+  duration: Number,
   linkToSource: String,
   contactDetails: String,
   image: String,
@@ -30,6 +35,11 @@ var JobSchema = AdSchema.extend({
 },{collection:'jobs'});
 
 var AdmissionSchema = AdSchema.extend({
+
+  entranceExamDate: Date,
+  requiredCertificates: [String],
+  questionPaperLanguage: [String]
+
 }, {collection:'admissions'});
 
 var Ad = mongoose.model('Ad',AdSchema);
