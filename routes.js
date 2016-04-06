@@ -45,7 +45,7 @@ router.put('/:id', function(req, res){
   models.Admission.findByIdAndUpdate(id,updatedAdmission,{new:true},function(err, admission){
     if(err){
       console.log(err)
-      res.json({error:err});
+      res.status(500).json({error:err});
     }else{
       console.log(updatedAdmission);
       res.json(updatedAdmission);
@@ -110,7 +110,7 @@ router.post('/', function(req,res){
     function (err,admissionObject){
     if(err){
       console.log(err);
-      res.json({error:err});
+      res.status(500).json({error:err});
     }else{
       res.json(admissionObject);
     }
