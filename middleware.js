@@ -10,8 +10,11 @@ module.exports = function extractRequest(req, res, next){
       extractedRequestBody.age = req.body.age;
       extractedRequestBody.notificationName = req.body.notificationName;
       extractedRequestBody.source = req.body.source;
+      extractedRequestBody.duration = req.body.duration;
+      extractedRequestBody.contactDetails = req.body.contactDetails;
       extractedRequestBody.selectionProcess = req.body.selectionProcess;
       extractedRequestBody.applicationProcedure = req.body.applicationProcedure;
+
 
       extractedRequestBody.tags = req.body.tags;
       extractedRequestBody.requiredCertificates = req.body.requiredCertificates;
