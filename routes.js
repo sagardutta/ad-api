@@ -98,7 +98,7 @@ router.get('/', function(req, res){
 
 router.post('/', function(req,res){
 
-  console.log( req.body);
+  console.log( req.extractedRequestBody);
   var tags = req.body.tags;
   var prunedTags = [];
    for (let tag of tags){
@@ -106,7 +106,7 @@ router.post('/', function(req,res){
    }
    req.body.tags = prunedTags;
   models.Admission.create(
-    req.body,
+    req.extractedRequestBody,
     function (err,admissionObject){
     if(err){
       console.log(err);

@@ -6,7 +6,7 @@ mongoose.connect(process.env.MONGOLAB_URI);
 var AdSchema = new mongoose.Schema({
   category: String,
   notificationName: String,
-  qualificiation: String,
+  qualification: String,
 
   age:Number,
   source: String,
@@ -38,7 +38,7 @@ var AdmissionSchema = AdSchema.extend({
 
   entranceExamDate: Date,
   requiredCertificates: [String],
-  questionPaperLanguage: [String]
+  questionPaperLanguages: [String]
 
 }, {collection:'admissions'});
 
