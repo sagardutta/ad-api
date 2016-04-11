@@ -5,6 +5,9 @@ var admissionRoutes = require('./routes.js');
 var extractRequest = require('./middleware.js');
 var dateParser = require('express-query-date');
 
+var winston = require('winston'),
+    expressWinston = require('express-winston');
+
 
 
 var bodyParser = require('body-parser');
@@ -37,8 +40,35 @@ app.all('/*', function(req, res, next) {
 
 var port = process.env.PORT || 3000;        // set our port
 
+app.use(expressWinston.logger({
+     transports: [
+       new winston.transports.Console({
+         json: true,
+         colorize: true
+       })
+     ],
+     requestWhitelist: ['url', 'headers', 'method', 'httpVersion', 'originalUrl', 'query','body'],
+      msg: "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}",
+   }));
 
 
 app.use('/api', admissionRoutes);
+
+// app.use(expressWinston.errorLogger({
+//      transports: [
+//        new winston.transports.Consolee({
+//          json: true,
+//          colorize: true
+//        })
+//      ]
+//    }));
+
+app.use(function (err, req, res, next){
+  if(err){
+    winston.error(err.errors);
+    res.status(500).json(err);
+  }
+});
+
 app.listen(port);
 console.log("app started on:"+ port);

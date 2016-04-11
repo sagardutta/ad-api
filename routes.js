@@ -6,7 +6,7 @@ var router = express.Router();              // get an instance of the express Ro
 
 router.get('/:id', function(req, res){
   const id = req.params.id;
-  console.log(id);
+
 
   models.Admission.findById(id,function(err, admission){
     if(err){
@@ -22,12 +22,11 @@ router.get('/:id', function(req, res){
 
 router.delete('/:id', function(req, res){
   const id = req.params.id;
-  console.log(id);
 
   models.Admission.findByIdAndRemove(id,function(err){
     if(err){
       console.log(err)
-      res.json({error:err});
+      res.status(500).json({error:err});
     }else{
       console.log();
       res.json();
@@ -37,17 +36,16 @@ router.delete('/:id', function(req, res){
 })
 
 
-router.put('/:id', function(req, res){
+router.put('/:id', function(req, res, next){
   const id = req.params.id;
-  console.log('update issued on '+id);
-  const updatedAdmission = req.body;
+
+
+  const updatedAdmission = req.extractedRequestBody;
 
   models.Admission.findByIdAndUpdate(id,updatedAdmission,{new:true},function(err, admission){
     if(err){
-      console.log(err)
-      res.status(500).json({error:err});
+      next(err);
     }else{
-      console.log(updatedAdmission);
       res.json(updatedAdmission);
     }
   });
@@ -56,7 +54,7 @@ router.put('/:id', function(req, res){
 
 
 
-router.get('/', function(req, res){
+router.get('/', function(req, res, next){
    console.log('Service GET request');
    var tag = req.query.tag;
    var page = parseInt(req.query.page);
@@ -82,23 +80,21 @@ router.get('/', function(req, res){
      queryObject.createdDate = createdDate;
    }
 
-   console.log(queryObject);
+   console.log('queryObject'+queryObject);
 
    models.Admission.paginate(queryObject,{page: page, limit :limit},function(err, users){
      if(err){
-       console.log(err)
-       res.json({error:err});
+       next(err);
+     }else{
+       console.log(users);
+       res.json(users);
      }
-
-     console.log(users);
-     res.json(users);
    });
 
 });
 
-router.post('/', function(req,res){
+router.post('/', function(req,res,next){
 
-  console.log( req.extractedRequestBody);
   var tags = req.body.tags;
   var prunedTags = [];
    for (let tag of tags){
@@ -108,12 +104,13 @@ router.post('/', function(req,res){
   models.Admission.create(
     req.extractedRequestBody,
     function (err,admissionObject){
-    if(err){
-      console.log(err);
-      res.status(500).json({error:err});
-    }else{
-      res.json(admissionObject);
-    }
+      if(err){
+        next(err,req,res);
+      }else{
+          res.json(admissionObject);
+      }
+
+
   });
 
 
