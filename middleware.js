@@ -1,3 +1,5 @@
+
+
 module.exports = function extractRequest(req, res, next){
   var category = req.body.category;
   var extractedRequestBody = {};
@@ -8,10 +10,13 @@ module.exports = function extractRequest(req, res, next){
 
 
       extractedRequestBody.qualification = req.body.qualification;
-      extractedRequestBody.age = getDefaultIfUndefined(req.body.age);
+      var age = req.body.age;
+      var duation = req.body.duration;
+
+      extractedRequestBody.age = (typeof age !== 'undefined' ? age : 0);
       extractedRequestBody.notificationName = req.body.notificationName;
       extractedRequestBody.source = req.body.source;
-      extractedRequestBody.duration = getDefaultIfUndefined(req.body.duration);
+      extractedRequestBody.duration = (typeof duration !== 'undefined'? duration : 0 );
       extractedRequestBody.contactDetails = req.body.contactDetails;
       extractedRequestBody.selectionProcess = req.body.selectionProcess;
       extractedRequestBody.applicationProcedure = req.body.applicationProcedure;
@@ -37,8 +42,4 @@ module.exports = function extractRequest(req, res, next){
       req.extractedRequestBody = extractedRequestBody;
   }
     next();
-}
-
-function getDefaultIfUndefined(i = 0){
-  return i;
 }
