@@ -11,7 +11,7 @@ module.exports = function extractRequest(req, res, next){
 
       extractedRequestBody.qualification = req.body.qualification;
       var age = req.body.age;
-      var duation = req.body.duration;
+      var duration = req.body.duration;
 
       extractedRequestBody.age = (typeof age !== 'undefined' ? age : 0);
       extractedRequestBody.notificationName = req.body.notificationName;
