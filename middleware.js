@@ -3,14 +3,15 @@ module.exports = function extractRequest(req, res, next){
   var extractedRequestBody = {};
 
 
+
   if((req.method === 'POST' || req.method === 'PUT')  && category.toUpperCase() === 'admission'.toUpperCase()){
 
 
       extractedRequestBody.qualification = req.body.qualification;
-      extractedRequestBody.age = req.body.age;
+      extractedRequestBody.age = getDefaultIfUndefined(req.body.age);
       extractedRequestBody.notificationName = req.body.notificationName;
       extractedRequestBody.source = req.body.source;
-      extractedRequestBody.duration = req.body.duration;
+      extractedRequestBody.duration = getDefaultIfUndefined(req.body.duration);
       extractedRequestBody.contactDetails = req.body.contactDetails;
       extractedRequestBody.selectionProcess = req.body.selectionProcess;
       extractedRequestBody.applicationProcedure = req.body.applicationProcedure;
@@ -36,4 +37,8 @@ module.exports = function extractRequest(req, res, next){
       req.extractedRequestBody = extractedRequestBody;
   }
     next();
+}
+
+function getDefaultIfUndefined(i = 0){
+  return i;
 }

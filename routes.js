@@ -80,13 +80,11 @@ router.get('/', function(req, res, next){
      queryObject.createdDate = createdDate;
    }
 
-   console.log('queryObject'+queryObject);
 
    models.Admission.paginate(queryObject,{page: page, limit :limit},function(err, users){
      if(err){
        next(err);
      }else{
-       console.log(users);
        res.json(users);
      }
    });
