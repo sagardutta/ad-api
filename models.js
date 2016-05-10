@@ -19,7 +19,7 @@ var AdSchema = new mongoose.Schema({
 
   createdDate: Date,
   lastUpdatedDate: Date,
-  duration: Number,
+  duration: String,
   linkToSource: String,
   contactDetails: String,
   image: String,
